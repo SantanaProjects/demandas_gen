@@ -1,0 +1,9 @@
+asgiref
+dj-database-url
+Django
+gunicorn
+packaging
+sqlparse
+typing_extensions
+tzdata
+whitenoise

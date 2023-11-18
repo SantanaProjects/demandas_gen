@@ -1,0 +1,21 @@
+<!-- demanda/templates/login.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form method="post" action="{% url 'user_login' %}">
+        {% csrf_token %}
+        <label for="username">Nome de usuário:</label>
+        <input type="text" id="username" name="username" autocomplete="username">
+
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" autocomplete="current-password">
+
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
