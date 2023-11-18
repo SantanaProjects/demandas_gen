@@ -10,7 +10,7 @@
         body {
             font-family: Arial, sans-serif; /* Fonte do texto */
             margin: 0; /* Remove margens padrão */
-            padding: 0; /* Remove preenchimentos padrão */
+            padding: 0px 0 0; /* Adiciona um preenchimento superior de 20 pixels, mantendo 0 nos demais lados */
             box-sizing: border-box; /* Garante que o modelo de caixa seja de borda (border-box) */
             display: flex;
             flex-direction: column;
@@ -22,21 +22,25 @@
 
         /* Estilo para o título do formulário */
         h2 {
-            text-align: center; /* Alinha o texto ao centro */
+            text-align: center;
+            margin: 0px 0 10; /* Adiciona uma margem superior de 20 pixels, mantendo 0 nas laterais e na parte inferior */
         }
+        
 
         /* Estilos para o formulário */
         form {
             width: 100%;
+            max-width: 400px; /* Ajuste conforme necessário */
             padding: 20px;
             box-sizing: border-box;
             text-align: center;
+            
         }
 
         /* Estilos para as etiquetas (labels) dos campos */
         label {
             display: block; /* Faz com que as etiquetas se comportem como blocos */
-            margin-bottom: 8px; /* Adiciona espaço abaixo de cada etiqueta */
+            margin-bottom: 4px; /* Adiciona espaço abaixo de cada etiqueta */
             text-align: left; /* Alinha o texto à esquerda */
         }
 
@@ -63,6 +67,7 @@
             outline: none; /* Remove a borda padrão do navegador ao focar */
         }
 
+        /* Estilos para o botão */
         button {
             width: 200px; /* Ou qualquer outro valor desejado */
             height: 40px; /* Ajuste conforme necessário para a altura */
@@ -75,7 +80,6 @@
             transition: background-color 0.3s ease; /* Adiciona transição suave na mudança de cor de fundo */
             font-weight: bold; /* Torna o texto em negrito */
         }
-
 
         /* Estilos responsivos para telas maiores que 768 pixels */
         @media screen and (min-width: 768px) {

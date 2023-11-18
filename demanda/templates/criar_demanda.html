@@ -7,16 +7,18 @@
     <title>Registrar Demanda de Atendimento</title>
 
     <style>
-        /* Estilos para centralizar o formulário */
+        /* Estilos para o corpo da página */
         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            margin: 0;
+            background-color: #F5F5F5; /* Cor de fundo da página */
         }
 
-        /* Estilos adicionais para o formulário, se necessário */
+        /* Estilos para o formulário */
         form {
             max-width: 400px;
             width: 100%;
@@ -24,53 +26,96 @@
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 10px;
+            text-align: center; /* Centraliza o texto no formulário */
         }
 
-        /* Estilo para os botões (+) */
+        /* Estilos para o título */
+        h2 {
+            text-align: center;
+            margin-bottom: 20px; /* Adiciona uma margem inferior para separar o título do formulário */
+        }
+
+        /* Estilos para o botão estilizado */
         .styled-button {
-            background-color: #00008B;
+            background-color: blue;
             color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 10px;
+            border-radius: 5px;
             cursor: pointer;
-            font-family: Arial, sans-serif;
-            height: 50px;
             font-weight: bold;
             font-size: 18px;
+            margin-top: 20px; /* Adiciona uma margem superior ao botão */
         }
 
-        /* Estilo para a lista de mensagens */
+        /* Estilos para a lista de mensagens */
         .messages {
             list-style: none;
             padding: 0;
             margin: 0;
         }
 
-        /* Estilo para cada mensagem */
+        /* Estilos para cada item de mensagem */
         .messages li {
             margin-bottom: 10px;
+            text-align: left; /* Alinha as mensagens à esquerda */
         }
 
-        /* Estilo para mensagens de sucesso */
+        /* Estilos para mensagens de sucesso */
         .messages .success {
             color: green;
         }
 
-        /* Estilo para mensagens de erro */
+        /* Estilos para mensagens de erro */
         .messages .error {
             color: red;
         }
-    </style>
 
+        /* Estilos para rótulos de campos de entrada */
+     
+        label {
+            display: block;
+            margin-bottom: 0px; /* Ajuste conforme necessário para a distância vertical */
+            margin-top: 0px; /* Ajuste conforme necessário para a distância vertical */
+            text-align: left;
+        }
+        
+        /* Estilos para campos de entrada */
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px; /* Mantém uma distância adequada entre os campos de entrada */
+            margin-top: 0px; /* Ajuste conforme necessário para a distância vertical */
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+        .left-align {
+            text-align: left;
+        }
+        .descricao-container {
+            width: 100%; /* Largura total */
+            box-sizing: border-box; /* Mantém a largura total considerando padding e borda */
+        }
+        
+        /* Adiciona o estilo para desativar o redimensionamento do campo de descrição */
+        textarea {
+            resize: none;
+            width: 100%; /* Largura total */
+            box-sizing: border-box; /* Mantém a largura total considerando padding e borda */
+        }
+    </style>
 </head>
 
 <body>
     <form method="post" action="{% url 'criar_demanda' %}">
         {% csrf_token %}
     
-        <h2>Registrar Demanda de Atendimento</h2>
-    
+        <!-- Título do formulário -->
+        <h3>Registrar Demanda de Atendimento</h3>
+        <br>
+        <!-- Exibição de mensagens do sistema -->
         {% if messages %}
         <ul class="messages">
             {% for message in messages %}
@@ -79,69 +124,32 @@
         </ul>
         {% endif %}
     
+        <!-- Campo de telefone -->
         <div>
             <label for="id_telefone">Telefone</label>
-            <br>
+            
             <input type="text" name="telefone" value="{{ form.initial.telefone }}" readonly>
         </div>
         
+        <!-- Campo de e-mail -->
+        <br>
         <div>
-            <label for="id_email">E-mail</label>
-            <br>
+            <label for="id_email">E-mail</label>            
             <input type="text" name="email" value="{{ form.initial.email }}" readonly>
         </div>
-        
-        <div>
+        <br>
+        <!-- Campo de descrição -->
+        <div class="left-align">
             <label for="{{ form.descricao.id_for_label }}">Descrição</label>
-            <br>
-            {{ form.descricao }}
-            {{ form.descricao.errors }}
+            <div class="descricao-container">
+                {{ form.descricao }}
+                {{ form.descricao.errors }}
+            </div>
         </div>
+        
+        <!-- Botão de envio -->
         <button class="styled-button" type="submit">Enviar Demanda</button>
     </form>
-    
-    <script>
-        // Receber seletor do id telefone
-        var telefone = document.getElementById("id_telefone");
-
-        telefone.addEventListener("input", function () {
-            // Remover os caracteres não numéricos usando a expressão regular /\D/g e limitar a 11 dígitos.
-            var limparValor = telefone.value.replace(/\D/g, "").substring(0, 11);
-
-            // Dividir a string em um array de caracteres individuais.
-            var numerosArray = limparValor.split("");
-
-            // Criar a variável para receber o número formatado
-            var numeroFormatado = "";
-
-            // Acessa o IF quando a quantidade de números é maior do que zero
-            if (numerosArray.length > 0) {
-                // Formatar o DD e concatenar o valor
-                // slice - extraie uma parte do array
-                // join - unir os elementos do array em uma única string
-                numeroFormatado += `(${numerosArray.slice(0, 2).join("")})`;
-            }
-
-            // Acessa o IF quando a quantidade de números é maior do que dois
-            if (numerosArray.length > 2) {
-                // Formatar o número do telefone e concatenar o valor
-                // slice - extraie uma parte do array
-                // join - unir os elementos do array em uma única string
-                numeroFormatado += ` ${numerosArray.slice(2, 7).join("")}`;
-            }
-
-            // Acessa o IF quando a quantidade de números é maior do que sete
-            if (numerosArray.length > 7) {
-                // Formatar o número do telefone e concatenar o valor
-                // slice - extraie uma parte do array
-                // join - unir os elementos do array em uma única string
-                numeroFormatado += `-${numerosArray.slice(7, 11).join("")}`;
-            }
-
-            // Enviar para o campo o número formatado
-            telefone.value = numeroFormatado;
-        });
-    </script>
 </body>
 
 </html>
