@@ -6,6 +6,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-x9oa2%q4zg^@hyo*hr@4roxp9d3)ync($!k#_axr)=!l39nall'
 
@@ -60,12 +61,39 @@ WSGI_APPLICATION = 'Demandas.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-"""DATABASES = {
+
+
+
+# Use a URL environment variable if available, otherwise use the specified values
+DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL:
+    DATABASES = {'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'banco_demandas',
+            'USER': 'banco_demandas_user',
+            'PASSWORD': 'jT3F1hAKriOjdvrtcQxTMNytu3PAVBkX',
+            'HOST': 'dpg-cla23962eqrc7394ve5g-a.oregon-postgres.render.com',
+            'PORT': '5432',
+        }
+    }
+
+
+
+
+
+
+
+"""
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+"""
 """
 DATABASE_URL = os.getenv("DATABASE_URL")
 # Adicione o seguinte bloco condicional
@@ -73,7 +101,7 @@ if DATABASE_URL:
     DATABASES = {'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)}
 else:
     DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}}
-
+"""
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -109,7 +137,10 @@ USE_TZ = True
 
 #STATIC_URL = 'static/'
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR /"staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+WHITENOISE_USE_FINDERS = True
+
 
 
 # Default primary key field type
@@ -138,8 +169,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 
