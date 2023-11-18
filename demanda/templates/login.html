@@ -4,6 +4,81 @@
 <html>
 <head>
     <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #F5F5F5; /* Cor de fundo da página */
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            width: 100%;
+            max-width: 400px; /* Ajuste conforme necessário */
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            box-sizing: border-box;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc; /* Cor da borda padrão */
+            border-radius: 5px; /* Bordas arredondadas */
+            transition: border-color 0.3s ease; /* Transição suave na cor da borda */
+        }
+        
+        input:focus {
+            border-color: blue; /* Cor da borda quando o input é selecionado (focus) */
+            box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Adiciona uma sombra azul suave quando o input está em foco */
+            outline: none; /* Remove a borda padrão do navegador ao focar */  }
+
+        button {
+            width: 200px; /* Ou qualquer outro valor desejado */
+            height: 40px; /* Ajuste conforme necessário para a altura */
+            padding: 10px; /* Ajuste conforme necessário */
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px; /* Adiciona bordas arredondadas */
+            transition: background-color 0.3s ease; /* Adiciona transição suave na mudança de cor de fundo */
+            font-weight: bold; /* Torna o texto em negrito */
+        }
+
+        @media screen and (min-width: 768px) {
+            /* Ajusta estilos para telas com largura maior que 768px */
+            form {
+                width: 50%;
+            }
+        }
+    </style>
 </head>
 <body>
     <h2>Login</h2>
@@ -11,11 +86,14 @@
         {% csrf_token %}
         <label for="username">Nome de usuário:</label>
         <input type="text" id="username" name="username" autocomplete="username">
-
+        <br>
+        <br>
         <label for="password">Senha:</label>
         <input type="password" id="password" name="password" autocomplete="current-password">
-
-        <button type="submit">Login</button>
+        <br>
+        <br>
+        <br>
+        <button type="submit">Entrar</button>
     </form>
 </body>
 </html>
