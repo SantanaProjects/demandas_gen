@@ -3,6 +3,8 @@ dj-database-url
 Django
 gunicorn
 packaging
+psycopg2
+psycopg2-binary
 sqlparse
 typing_extensions
 tzdata
