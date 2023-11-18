@@ -1,5 +1,3 @@
-<!-- demanda/templates/login.html -->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,53 +21,48 @@
         }
 
         form {
+            max-width: 300px; /* Ajuste conforme necessário */
             width: 100%;
-            max-width: 400px; /* Ajuste conforme necessário */
+            height: 350px; /* Ajuste conforme necessário */
             padding: 20px;
             box-sizing: border-box;
             text-align: center;
-            
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /*margin: 20px;*/
+            margin: -120px 20px 20px 20px; /* Valor negativo para subir o formulário */
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            text-align: left;
-        }
-
-        input,
-        button {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 8px;
-            box-sizing: border-box;
-        }
         input {
-            width: 100%;
+            width: 90%;
             padding: 8px;
             margin-bottom: 8px;
             box-sizing: border-box;
-            border: 1px solid #ccc; /* Cor da borda padrão */
-            border-radius: 5px; /* Bordas arredondadas */
-            transition: border-color 0.3s ease; /* Transição suave na cor da borda */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+            padding-left: 40px;
         }
         
         input:focus {
-            border-color: blue; /* Cor da borda quando o input é selecionado (focus) */
-            box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Adiciona uma sombra azul suave quando o input está em foco */
-            outline: none; /* Remove a borda padrão do navegador ao focar */  }
+            border-color: blue;
+            box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+            outline: none;
+        }
 
         button {
-            width: 200px; /* Ou qualquer outro valor desejado */
-            height: 40px; /* Ajuste conforme necessário para a altura */
-            padding: 10px; /* Ajuste conforme necessário */
+            width: 50%;
+            height: 40px;
+            padding: 10px;
             background-color: blue;
             color: white;
             border: none;
             cursor: pointer;
-            border-radius: 5px; /* Adiciona bordas arredondadas */
-            transition: background-color 0.3s ease; /* Adiciona transição suave na mudança de cor de fundo */
-            font-weight: bold; /* Torna o texto em negrito */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
         }
 
         @media screen and (min-width: 768px) {
@@ -78,19 +71,33 @@
                 width: 50%;
             }
         }
+        /* Adicione este estilo ao seu CSS existente */
+        input[type="text"]::placeholder,
+        input[type="password"]::placeholder {
+            text-align: left;
+            padding-left: 0px; /* Ajuste conforme necessário para a posição desejada do emoji */
+            text-indent: 0px; /* Ajuste conforme necessário para posicionar o cursor após o emoji */
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            padding-left: 0px; /* Ajuste conforme necessário para a posição desejada do emoji */
+            text-indent: 20px; /* Ajuste conforme necessário para posicionar o cursor após o emoji */
+            /* ... outros estilos ... */
+        }
+
     </style>
 </head>
 <body>
-    <h2>Login</h2>
     <form method="post" action="{% url 'user_login' %}">
+        <h2>Login</h2>
+        <br>
+        <br>
         {% csrf_token %}
-        <label for="username">Nome de usuário:</label>
-        <input type="text" id="username" name="username" autocomplete="username">
+        <input type="text" name="username" placeholder="👤 Nome de usuário" autocomplete="username">
         <br>
         <br>
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" autocomplete="current-password">
-        <br>
+        <input type="password" name="password" placeholder="🔒 Senha" autocomplete="current-password">
         <br>
         <br>
         <button type="submit">Entrar</button>
