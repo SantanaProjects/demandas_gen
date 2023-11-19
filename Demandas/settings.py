@@ -81,6 +81,17 @@ else:
         }
     }
 """
+DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'banco_demandas',
+            'USER': 'banco_demandas_user',
+            'PASSWORD': 'jT3F1hAKriOjdvrtcQxTMNytu3PAVBkX',
+            'HOST': 'dpg-cla23962eqrc7394ve5g-a.oregon-postgres.render.com',
+            'PORT': '5432',
+        }
+    }
+
 
 """
 DATABASES = {
@@ -91,13 +102,14 @@ DATABASES = {
 }
 """
 
+"""
 DATABASE_URL = os.getenv("DATABASE_URL")
 # Adicione o seguinte bloco condicional
 if DATABASE_URL:
     DATABASES = {'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)}
 else:
     DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}}
-
+"""
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -131,7 +143,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 
-#STATIC_URL = 'static/'
+
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
