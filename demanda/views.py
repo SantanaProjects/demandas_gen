@@ -27,30 +27,6 @@ def user_login(request):
 
     return render(request, 'login.html', {'form': form})
 
-"""
-@login_required(login_url='user_login')
-def criar_demanda(request):
-    if request.method == 'POST':
-        form = DemandaForm(request.POST)
-        if form.is_valid():
-            demanda = form.save(commit=False)
-            demanda.usuario = request.user
-            demanda.save()
-
-            # Exibir mensagem de sucesso
-            messages.success(request, 'A demanda foi criada com sucesso!')
-
-            # Enviar e-mail para destinatários
-            enviar_email_nova_demanda(demanda)
-
-            return redirect('criar_demanda')
-    else:
-        form = DemandaForm()
-
-    return render(request, 'criar_demanda.html', {'form': form})
-"""
-
-
 
 
 # Modifique a view criar_demanda
@@ -84,7 +60,7 @@ def criar_demanda(request):
 
 
 
-
+"""
 def cadastro(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -96,7 +72,22 @@ def cadastro(request):
         form = CustomUserCreationForm()
 
     return render(request, 'cadastro.html', {'form': form})
+"""
+def cadastro(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Adicione logs para depuração
+            print("Usuário salvo com sucesso!")
+            return redirect('user_login')
+        else:
+            # Adicione logs para depuração
+            print("Formulário inválido:", form.errors)
+    else:
+        form = CustomUserCreationForm()
 
+    return render(request, 'cadastro.html', {'form': form})
 
 
 
