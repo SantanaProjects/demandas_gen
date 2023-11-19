@@ -81,6 +81,7 @@ else:
         }
     }
 """
+"""
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -91,16 +92,18 @@ DATABASES = {
             'PORT': '5432',
         }
     }
-
-
 """
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-"""
+import dj_database_url
+
+DATABASES =['default'] = dj_database_url.config(conn_max_age=600,ssl_require=True)
 
 """
 DATABASE_URL = os.getenv("DATABASE_URL")
