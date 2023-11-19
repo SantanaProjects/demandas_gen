@@ -25,14 +25,14 @@ class CustomUserCreationForm(UserCreationForm):
         model = CustomUser
         fields = ['username', 'email', 'telefone', 'password1', 'password2']
 
-
+"""
 class CustomUserCreationForm(UserCreationForm):
     telefone = forms.CharField(max_length=15, label='Telefone')
 
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'telefone', 'password1', 'password2']
-
+"""
 class LoginForm(forms.Form):
     username = forms.CharField(label='Nome de usuário')
     password = forms.CharField(label='Senha', widget=forms.PasswordInput)
@@ -55,3 +55,4 @@ class DemandaForm(forms.ModelForm):
     def clean_usuario(self):
         # Certificar-se de que o campo 'usuario' está definido
         return self.instance.usuario if self.instance else None        
+    
