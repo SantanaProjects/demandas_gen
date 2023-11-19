@@ -44,7 +44,7 @@ ROOT_URLCONF = 'Demandas.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,6 +65,7 @@ WSGI_APPLICATION = 'Demandas.wsgi.application'
 
 
 # Use a URL environment variable if available, otherwise use the specified values
+"""
 DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL:
     DATABASES = {'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)}
@@ -79,7 +80,7 @@ else:
             'PORT': '5432',
         }
     }
-
+"""
 
 """
 DATABASES = {
@@ -89,14 +90,14 @@ DATABASES = {
     }
 }
 """
-"""
+
 DATABASE_URL = os.getenv("DATABASE_URL")
 # Adicione o seguinte bloco condicional
 if DATABASE_URL:
     DATABASES = {'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)}
 else:
     DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}}
-"""
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
