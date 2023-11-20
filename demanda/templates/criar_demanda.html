@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +7,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Demanda de Atendimento</title>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('id_descricao').addEventListener('paste', function (event) {
+                var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+                for (index in items) {
+                    var item = items[index];
+                    if (item.kind === 'file' && item.type.indexOf('image') !== -1) {
+                        var blob = item.getAsFile();
+                        var reader = new FileReader();
+                        reader.onload = function (event) {
+                            // Append the image URL to the description textarea
+                            document.getElementById('id_descricao').value += '\n' + event.target.result;
+                        };
+                        reader.readAsDataURL(blob);
+                    }
+                }
+            });
+        });
+    </script>
+
 
     <style>
         /* Estilos para o corpo da página */
@@ -20,7 +43,7 @@
         
         form {
             width: 100%;
-            max-width: 400px;
+            max-width: 600px;
             padding: 20px;
             box-sizing: border-box;
             text-align: center;
@@ -28,11 +51,13 @@
             border-radius: 10px; /* Adiciona bordas arredondadas */
             background-color: white; /* Cor de fundo branca */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra suave */
-            margin: 20px; /* Adiciona uma margem externa ao formulário */
+            /*margin: 20px;*/ /* Adiciona uma margem externa ao formulário */
+            margin: -20px 20px 20px 20px;
+            height: 80vh;
         }
        
         /* Estilos para o título */
-        h2 {
+        h3 {
             text-align: center;
             margin-bottom: 20px; /* Adiciona uma margem inferior para separar o título do formulário */
         }
@@ -49,6 +74,8 @@
             font-size: 18px;
             margin-top: 20px; /* Adiciona uma margem superior ao botão */
         }
+        
+       
 
         /* Estilos para a lista de mensagens */
         .messages {
@@ -92,9 +119,56 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             transition: border-color 0.3s ease;
+            text-align: left; /* Alinha o texto à esquerda dentro do input */
         }
+        /* Estilos para campos de entrada */
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            margin-top: 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+            text-align: left;
+        }
+        
+        /* Estilo para o campo de telefone */
+        .telefone-container {
+            display: flex;
+            flex-direction: column; /* Coluna para garantir o empilhamento vertical */
+            align-items: flex-start; /* Alinhamento à esquerda */
+        }
+        
+        .telefone-input {
+            width: calc(30% - 16px); /* Ajuste conforme necessário para a margem interna */
+            margin: 0px; /* Ajuste conforme necessário para o espaçamento entre a label e o input */
+        }
+
+          
+        /* Estilo para o campo de email */
+        .email-container {
+            display: flex;
+            flex-direction: column; /* Coluna para garantir o empilhamento vertical */
+            align-items: flex-start; /* Alinhamento à esquerda */
+        }
+        
+        .email-input {
+            width: calc(50% - 16px); /* Ajuste conforme necessário para a margem interna */
+            margin: 0px; /* Ajuste conforme necessário para o espaçamento entre a label e o input */
+        }
+
         .left-align {
             text-align: left;
+        }
+        /* Adiciona estilo para o foco nos campos de entrada */
+        input:focus,
+        .descricao-container textarea:focus {
+            border-color: blue;
+            box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+            outline: none;
         }
         .descricao-container {
             width: 100%; /* Largura total */
@@ -106,6 +180,7 @@
             resize: none;
             width: 100%; /* Largura total */
             box-sizing: border-box; /* Mantém a largura total considerando padding e borda */
+            height: 30vh;
         }
     </style>
 </head>
@@ -127,31 +202,33 @@
         {% endif %}
     
         <!-- Campo de telefone -->
-        <div>
+        <div class="telefone-container">
             <label for="id_telefone">Telefone</label>
-            
-            <input type="text" name="telefone" value="{{ form.initial.telefone }}" readonly>
+            <input type="text" name="telefone" value="{{ form.initial.telefone }}" readonly class="telefone-input">
         </div>
         
         <!-- Campo de e-mail -->
         <br>
-        <div>
+      
+        <div class="email-container">
             <label for="id_email">E-mail</label>            
-            <input type="text" name="email" value="{{ form.initial.email }}" readonly>
+            <input type="text" name="email" value="{{ form.initial.email }}" readonly class="email-input">
         </div>
         <br>
         <!-- Campo de descrição -->
         <div class="left-align">
             <label for="{{ form.descricao.id_for_label }}">Descrição</label>
             <div class="descricao-container">
-                {{ form.descricao }}
+                <textarea id="id_descricao" name="{{ form.descricao.name }}"></textarea>
                 {{ form.descricao.errors }}
             </div>
         </div>
         
+        
         <!-- Botão de envio -->
         <button class="styled-button" type="submit">Enviar Demanda</button>
     </form>
+    
 </body>
 
 </html>

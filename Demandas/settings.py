@@ -7,16 +7,13 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-x9oa2%q4zg^@hyo*hr@4roxp9d3)ync($!k#_axr)=!l39nall'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -38,6 +35,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+   
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -67,7 +65,14 @@ WSGI_APPLICATION = 'Demandas.wsgi.application'
 
 
 # Use a URL environment variable if available, otherwise use the specified values
+DATABASE_URL = os.getenv("DATABASE_URL")
+# Adicione o seguinte bloco condicional
+if DATABASE_URL:
+    DATABASES = {'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)}
+else:
+    DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}}
 
+"""
 DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL:
     DATABASES = {'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)}
@@ -82,7 +87,7 @@ else:
             'PORT': '5432',
         }
     }
-
+"""
 """
 DATABASES = {
         'default': {
@@ -96,14 +101,14 @@ DATABASES = {
     }
 """
 
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+"""
 
 """
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -165,7 +170,7 @@ DEFAULT_FROM_EMAIL = 'bragasan34@gmail.com'
 EMAIL_RECEPIENT = ['bragasan1@gmail.com']
 
 # Lembre-se de configurar corretamente suas credenciais de e-mail no seu servidor SMTP
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.magil.backends.smtp.EmailBackend'
 #EMAIL_HOST = 'mail.sesiam.org.br'  # provedor de e-mail
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  # porta do provedor de e-mail
@@ -178,7 +183,7 @@ EMAIL_HOST_PASSWORD = 'eptk mfkd mfgk mfqg '
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
-
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 
 

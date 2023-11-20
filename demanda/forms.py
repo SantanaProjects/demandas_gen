@@ -1,4 +1,4 @@
-
+#ARQUIVO FORMS.PY
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -6,13 +6,22 @@ from .models import CustomUser
 from .models import Demanda
 from django.contrib.auth import get_user_model
 
+
 class CustomUserCreationForm(UserCreationForm):
-    telefone = forms.CharField(max_length=15, label='Telefone')
+    username = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'username'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'autocomplete': 'email'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}))
+    
+    # Adicione o campo de telefone com a classe personalizada
+   # telefone = forms.CharField(widget=forms.TextInput(attrs={'class': 'telefone-input'}))
+    telefone = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'telefone'}))
+
+    #telefone = forms.CharField(widget=forms.TextInput(attrs={'class': 'telefone-input'}))
 
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'telefone', 'password1', 'password2']
-
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Nome de usuário')
@@ -35,5 +44,14 @@ class DemandaForm(forms.ModelForm):
 
     def clean_usuario(self):
         # Certificar-se de que o campo 'usuario' está definido
-        return self.instance.usuario if self.instance else None        
+        return self.instance.usuario if self.instance else None       
+
+    def clean_descricao(self):
+        descricao = self.cleaned_data.get('descricao')
+        # Processar a descrição para extrair URLs de imagens
+        import re
+        pattern = re.compile(r'https?://[^\s]+')
+        image_urls = pattern.findall(descricao)
+        # Faça algo com as URLs, se necessário
+        return descricao 
     

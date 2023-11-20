@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviso</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #F5F5F5;
+        }
+
+        .aviso-container {
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        .aviso-container p {
+            margin-bottom: 20px;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .button-cadastrar {
+            background-color: blue;
+            color: white;
+        }
+
+        .button-sair {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aviso-container">
+        {% if sucesso %}
+            <p>A demanda foi criada com sucesso!</p>
+            <div class="buttons-container">
+                <form action="{% url 'criar_demanda' %}" method="get">
+                    <button class="button button-cadastrar" type="submit">Nova Demanda</button>
+                </form>
+                <a class="button button-sair" href="{% url 'logout' %}">Sair</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
