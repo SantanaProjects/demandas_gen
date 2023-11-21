@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Login</title>
     <style>
@@ -13,7 +14,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-color: #F5F5F5; /* Cor de fundo da página */
+            background-color: #F5F5F5;
         }
 
         h2 {
@@ -21,9 +22,9 @@
         }
 
         form {
-            max-width: 300px; /* Ajuste conforme necessário */
+            max-width: 300px;
             width: 100%;
-            height: 350px; /* Ajuste conforme necessário */
+            height: 350px;
             padding: 20px;
             box-sizing: border-box;
             text-align: center;
@@ -31,8 +32,7 @@
             border-radius: 10px;
             background-color: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            /*margin: 20px;*/
-            margin: -120px 20px 20px 20px; /* Valor negativo para subir o formulário */
+            margin: -120px 20px 20px 20px;
         }
 
         input {
@@ -45,7 +45,7 @@
             transition: border-color 0.3s ease;
             padding-left: 40px;
         }
-        
+
         input:focus {
             border-color: blue;
             box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
@@ -65,35 +65,60 @@
             font-weight: bold;
         }
 
+        .alert-danger {
+            color: red;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
         @media screen and (min-width: 768px) {
-            /* Ajusta estilos para telas com largura maior que 768px */
             form {
                 width: 50%;
             }
         }
-        /* Adicione este estilo ao seu CSS existente */
+
         input[type="text"]::placeholder,
         input[type="password"]::placeholder {
             text-align: left;
-            padding-left: 0px; /* Ajuste conforme necessário para a posição desejada do emoji */
-            text-indent: 0px; /* Ajuste conforme necessário para posicionar o cursor após o emoji */
-        }
-        
-        input[type="text"],
-        input[type="password"] {
-            padding-left: 0px; /* Ajuste conforme necessário para a posição desejada do emoji */
-            text-indent: 20px; /* Ajuste conforme necessário para posicionar o cursor após o emoji */
-            /* ... outros estilos ... */
+            padding-left: 0px;
+            text-indent: 0px;
         }
 
+        input[type="text"],
+        input[type="password"] {
+            padding-left: 0px;
+            text-indent: 20px;
+        }
     </style>
 </head>
+
 <body>
     <form method="post" action="{% url 'user_login' %}">
+        {% csrf_token %}
+
+
+        {% if request.user.is_authenticated %}
+        {% if request.user.is_tecnico %}
+            <script>window.location.href = "{% url 'dashboard_tecnico' %}";</script>
+        {% else %}
+            <script>window.location.href = "{% url 'criar_demanda' %}";</script>
+        {% endif %}
+        {% endif %}   
+
+
+
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
         <h2>Login</h2>
         <br>
-        <br>
-        {% csrf_token %}
+        
         <input type="text" name="username" placeholder="👤 Nome de usuário" autocomplete="username">
         <br>
         <br>
@@ -104,4 +129,5 @@
         <button type="submit">Entrar</button>
     </form>
 </body>
+
 </html>

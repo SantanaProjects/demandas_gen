@@ -1,0 +1,114 @@
+<!-- dashboard_tecnico.html -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Técnico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #F5F5F5;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .demanda {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .status-indicator.atendida {
+            background-color: green;
+        }
+
+        .status-indicator.aberta {
+            background-color: red;
+        }
+
+        .filter-form {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-form label, .filter-form input, .filter-form button {
+            margin-right: 10px;
+        }
+
+        .status-form {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-form select {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dashboard Técnico</h1>
+
+        <!-- Formulário de filtro por data -->
+        <form method="get" class="filter-form">
+            <label for="data_criacao_inicio">Data de Criação Início:</label>
+            <input type="date" name="data_criacao_inicio">
+
+            <label for="data_criacao_fim">Data de Criação Fim:</label>
+            <input type="date" name="data_criacao_fim">
+
+            <button type="submit">Filtrar</button>
+        </form>
+
+        <!-- Loop sobre as demandas -->
+        {% for demanda in demandas %}
+            <div class="demanda">
+                <!-- Indicador de status -->
+                <div class="status-indicator {% if demanda.status == 'AT' %}atendida{% else %}aberta{% endif %}"></div>
+
+                <!-- Detalhes da demanda -->
+                <div>
+                    <h3>{{ demanda.descricao }}</h3>
+                    <p>Data de Criação: {{ demanda.data_criacao|date:"d/m/Y" }}</p>
+                    <p>Usuário: {{ demanda.usuario.username }}</p>
+                
+                    <!-- Formulário de mudança de status -->
+                    <form method="post" action="{% url 'marcar_atendida' demanda.id %}" class="status-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="demanda_id" value="{{ demanda.id }}">
+                        <label for="status">Status:</label>
+                        <select name="status" id="status">
+                            <option value="AB" {% if demanda.status == 'AB' %}selected{% endif %}>Aberta</option>
+                            <option value="AT" {% if demanda.status == 'AT' %}selected{% endif %}>Atendida</option>
+                        </select>
+                        <button type="submit">Atualizar Status</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -16,21 +16,23 @@ class CustomUserCreationForm(UserCreationForm):
     # Adicione o campo de telefone com a classe personalizada
    # telefone = forms.CharField(widget=forms.TextInput(attrs={'class': 'telefone-input'}))
     telefone = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'telefone'}))
-
+    is_tecnico = forms.BooleanField(required=False, label='É Técnico?')
     #telefone = forms.CharField(widget=forms.TextInput(attrs={'class': 'telefone-input'}))
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'telefone', 'password1', 'password2']
+        fields = ['username', 'email', 'telefone', 'is_tecnico', 'password1', 'password2']
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Nome de usuário')
     password = forms.CharField(label='Senha', widget=forms.PasswordInput)
 
 class DemandaForm(forms.ModelForm):
+    is_tecnico = forms.BooleanField(required=False, label='É Técnico?', initial=False)
+
     class Meta:
         model = Demanda
-        fields = ['descricao']
+        fields = ['descricao', 'is_tecnico']
 
     def __init__(self, *args, **kwargs):
         # Obter o usuário logado

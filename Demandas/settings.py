@@ -72,34 +72,7 @@ if DATABASE_URL:
 else:
     DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}}
 
-"""
-DATABASE_URL = os.getenv("DATABASE_URL")
-if DATABASE_URL:
-    DATABASES = {'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)}
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'banco_demandas',
-            'USER': 'banco_demandas_user',
-            'PASSWORD': 'jT3F1hAKriOjdvrtcQxTMNytu3PAVBkX',
-            'HOST': 'dpg-cla23962eqrc7394ve5g-a.oregon-postgres.render.com',
-            'PORT': '5432',
-        }
-    }
-"""
-"""
-DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'banco_demandas',
-            'USER': 'banco_demandas_user',
-            'PASSWORD': 'jT3F1hAKriOjdvrtcQxTMNytu3PAVBkX',
-            'HOST': 'dpg-cla23962eqrc7394ve5g-a.oregon-postgres.render.com',
-            'PORT': '5432',
-        }
-    }
-"""
+
 
 """
 DATABASES = {
@@ -110,18 +83,23 @@ DATABASES = {
 }
 """
 
-"""
-DATABASE_URL = os.getenv("DATABASE_URL")
-# Adicione o seguinte bloco condicional
-if DATABASE_URL:
-    DATABASES = {'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)}
-else:
-    DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}}
-"""
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_USER_MODEL = 'demanda.CustomUser'
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 6,  # Defina o comprimento mínimo da senha desejado
+        }
+    },
+    # Adicione outras validações conforme necessário
+]
+
+"""
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -135,14 +113,18 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+
 ]
+"""
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'pt-Br'
 
-TIME_ZONE = 'America/Sao_Paulo'
+TIME_ZONE = 'America/Manaus'
 
 USE_I18N = True
 
@@ -182,9 +164,10 @@ EMAIL_HOST_PASSWORD = 'eptk mfkd mfgk mfqg '
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    'demanda.backends.CaseInsensitiveModelBackend',
 ]
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
-
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 
 

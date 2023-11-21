@@ -6,8 +6,8 @@ from .models import CustomUser, Demanda
 # admin.py
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'telefone', 'is_staff', 'is_active')
-    search_fields = ('username', 'email', 'telefone')
+    list_display = ('username', 'email', 'telefone',  'is_tecnico','is_staff', 'is_active')
+    search_fields = ('username', 'email', 'telefone','tecnico')
     ordering = ('username',)
     filter_horizontal = ()
 
